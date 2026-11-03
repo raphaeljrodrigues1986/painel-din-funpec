@@ -211,7 +211,7 @@
   ];
   $("#figures").innerHTML = figs.map((f) => `<div class="figure"><div class="v">${f.v}${f.s ? `<small>${f.s}</small>` : ""}</div><div class="k">${f.k}</div></div>`).join("");
   const mes = HOJE.toLocaleDateString("pt-BR", { month: "long", year: "numeric" });
-  $("#bandEyebrow").textContent = "Diretoria de Inovação e Novos Negócios · " + mes.charAt(0).toUpperCase() + mes.slice(1);
+  $("#bandEyebrow").textContent = "FUNPEC · " + mes.charAt(0).toUpperCase() + mes.slice(1);
 
   (function faixaAnimada() {
     const cv = $("#bandNet"); const ctx = cv.getContext && cv.getContext("2d"); if (!ctx) return;
