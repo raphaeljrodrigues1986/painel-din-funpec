@@ -286,10 +286,10 @@
   function setModo(m) { modo = m; store.set("din-modo", m); $("#modoQuadro").setAttribute("aria-pressed", m === "quadro"); $("#modoLista").setAttribute("aria-pressed", m === "lista"); renderAtividades(); }
   $("#modoQuadro").addEventListener("click", () => setModo("quadro"));
   $("#modoLista").addEventListener("click", () => setModo("lista"));
-  ["fBusca", "fFrente", "fResp", "fPrazo"].forEach((id) => $("#" + id).addEventListener("input", renderAtividades));
+  ["fBusca", "fFrente", "fResp", "fPrazo", "fHoriz"].forEach((id) => $("#" + id).addEventListener("input", renderAtividades));
   function filtrados() {
-    const q = norm($("#fBusca").value), f = $("#fFrente").value, r = $("#fResp").value, p = $("#fPrazo").value;
-    return cards.filter((c) => (!f || c.frente === f) && (!r || c.resp.includes(r)) &&
+    const q = norm($("#fBusca").value), f = $("#fFrente").value, r = $("#fResp").value, p = $("#fPrazo").value, hz = $("#fHoriz").value;
+    return cards.filter((c) => (!f || c.frente === f) && (!hz || c.labels.includes("horizonte-" + hz)) && (!r || c.resp.includes(r)) &&
       (!q || norm(c.key + " " + c.summary + " " + c.description).includes(q)) &&
       (!p || (p === "late" ? c.atrasado : (!c.feito && c.d != null && c.d >= 0 && c.d <= +p))))
       .sort((a, b) => (a.d ?? 9999) - (b.d ?? 9999));

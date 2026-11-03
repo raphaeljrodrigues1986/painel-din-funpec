@@ -1,6 +1,6 @@
 /* Gerado por scripts/sync_jira.py. Não edite à mão. */
 window.JIRA_DATA = {
- "geradoEm": "2026-11-03T00:40+00:00",
+ "geradoEm": "2026-11-03T11:10+00:00",
  "fonte": "https://funpec2026.atlassian.net · JQL: project = NEIF AND labels = plano-nov2026",
  "base": "https://funpec2026.atlassian.net/browse/",
  "cards": [
@@ -12,11 +12,12 @@ window.JIRA_DATA = {
    "due": "2026-11-03",
    "labels": [
     "frente-gestao",
+    "horizonte-curto",
     "plano-nov2026",
     "prioridade-alta",
     "resp-diretor"
    ],
-   "updated": "2026-11-02",
+   "updated": "2026-11-03",
    "assignee": "Raphael Rodrigues",
    "subtasks": 0,
    "subtasksDone": 0,
@@ -31,11 +32,12 @@ window.JIRA_DATA = {
    "labels": [
     "frente-institucional",
     "heranca",
+    "horizonte-curto",
     "plano-nov2026",
     "prioridade-alta",
     "resp-diretor"
    ],
-   "updated": "2026-11-02",
+   "updated": "2026-11-03",
    "assignee": "Raphael Rodrigues",
    "subtasks": 0,
    "subtasksDone": 0,
@@ -50,12 +52,13 @@ window.JIRA_DATA = {
    "labels": [
     "frente-institucional",
     "heranca",
+    "horizonte-curto",
     "plano-nov2026",
     "prioridade-alta",
     "resp-diretor",
     "resp-gerente"
    ],
-   "updated": "2026-11-02",
+   "updated": "2026-11-03",
    "assignee": "Raphael Rodrigues",
    "subtasks": 0,
    "subtasksDone": 0,
@@ -70,10 +73,11 @@ window.JIRA_DATA = {
    "labels": [
     "frente-parcerias",
     "heranca",
+    "horizonte-curto",
     "plano-nov2026",
     "resp-diretor"
    ],
-   "updated": "2026-11-02",
+   "updated": "2026-11-03",
    "assignee": "Raphael Rodrigues",
    "subtasks": 0,
    "subtasksDone": 0,
@@ -88,10 +92,11 @@ window.JIRA_DATA = {
    "labels": [
     "frente-institucional",
     "heranca",
+    "horizonte-curto",
     "plano-nov2026",
     "resp-gerente"
    ],
-   "updated": "2026-11-02",
+   "updated": "2026-11-03",
    "assignee": "Raphael Rodrigues",
    "subtasks": 0,
    "subtasksDone": 0,
@@ -106,10 +111,11 @@ window.JIRA_DATA = {
    "labels": [
     "frente-institucional",
     "heranca",
+    "horizonte-curto",
     "plano-nov2026",
     "resp-gerente"
    ],
-   "updated": "2026-11-02",
+   "updated": "2026-11-03",
    "assignee": "Raphael Rodrigues",
    "subtasks": 0,
    "subtasksDone": 0,
@@ -120,14 +126,15 @@ window.JIRA_DATA = {
    "summary": "[Institucional] Norma de cargos e salários para projetos fora do RN",
    "status": "Tarefas pendentes",
    "cat": "new",
-   "due": "2026-12-11",
+   "due": "2027-01-29",
    "labels": [
     "frente-institucional",
     "heranca",
+    "horizonte-medio",
     "plano-nov2026",
     "resp-gerente"
    ],
-   "updated": "2026-11-02",
+   "updated": "2026-11-03",
    "assignee": "Raphael Rodrigues",
    "subtasks": 0,
    "subtasksDone": 0,
@@ -138,14 +145,15 @@ window.JIRA_DATA = {
    "summary": "[Programas] Reformular FunHUB e encerrar ou reformular ETEC, Marketplace, Catalisa GOV e Conecta",
    "status": "Tarefas pendentes",
    "cat": "new",
-   "due": "2026-12-04",
+   "due": "2027-01-29",
    "labels": [
     "frente-programas",
     "heranca",
+    "horizonte-medio",
     "plano-nov2026",
     "resp-gerente"
    ],
-   "updated": "2026-11-02",
+   "updated": "2026-11-03",
    "assignee": "Raphael Rodrigues",
    "subtasks": 0,
    "subtasksDone": 0,
@@ -159,10 +167,11 @@ window.JIRA_DATA = {
    "due": "2026-12-18",
    "labels": [
     "frente-captacao",
+    "horizonte-curto",
     "plano-nov2026",
     "resp-analista"
    ],
-   "updated": "2026-11-02",
+   "updated": "2026-11-03",
    "assignee": "Raphael Rodrigues",
    "subtasks": 0,
    "subtasksDone": 0,
@@ -176,12 +185,13 @@ window.JIRA_DATA = {
    "due": "2026-12-15",
    "labels": [
     "frente-captacao",
+    "horizonte-curto",
     "plano-nov2026",
     "prioridade-alta",
     "resp-analista",
     "resp-diretor"
    ],
-   "updated": "2026-11-02",
+   "updated": "2026-11-03",
    "assignee": "Raphael Rodrigues",
    "subtasks": 0,
    "subtasksDone": 0,
@@ -195,11 +205,12 @@ window.JIRA_DATA = {
    "due": "2026-11-13",
    "labels": [
     "frente-captacao",
+    "horizonte-curto",
     "plano-nov2026",
     "resp-analista",
     "rotina"
    ],
-   "updated": "2026-11-02",
+   "updated": "2026-11-03",
    "assignee": "Raphael Rodrigues",
    "subtasks": 0,
    "subtasksDone": 0,
@@ -214,10 +225,11 @@ window.JIRA_DATA = {
    "labels": [
     "estrutura",
     "frente-captacao",
+    "horizonte-curto",
     "plano-nov2026",
     "resp-gerente"
    ],
-   "updated": "2026-11-02",
+   "updated": "2026-11-03",
    "assignee": "Raphael Rodrigues",
    "subtasks": 0,
    "subtasksDone": 0,
@@ -232,10 +244,11 @@ window.JIRA_DATA = {
    "labels": [
     "frente-captacao",
     "heranca",
+    "horizonte-curto",
     "plano-nov2026",
     "resp-analista"
    ],
-   "updated": "2026-11-02",
+   "updated": "2026-11-03",
    "assignee": "Raphael Rodrigues",
    "subtasks": 0,
    "subtasksDone": 0,
@@ -249,11 +262,12 @@ window.JIRA_DATA = {
    "due": "2026-11-30",
    "labels": [
     "frente-pdi",
+    "horizonte-curto",
     "plano-nov2026",
     "prioridade-alta",
     "resp-diretor"
    ],
-   "updated": "2026-11-02",
+   "updated": "2026-11-03",
    "assignee": "Raphael Rodrigues",
    "subtasks": 0,
    "subtasksDone": 0,
@@ -267,11 +281,12 @@ window.JIRA_DATA = {
    "due": "2026-11-27",
    "labels": [
     "frente-pdi",
+    "horizonte-curto",
     "plano-nov2026",
     "resp-analista",
     "resp-diretor"
    ],
-   "updated": "2026-11-02",
+   "updated": "2026-11-03",
    "assignee": "Raphael Rodrigues",
    "subtasks": 0,
    "subtasksDone": 0,
@@ -285,11 +300,12 @@ window.JIRA_DATA = {
    "due": "2026-12-04",
    "labels": [
     "frente-pdi",
+    "horizonte-curto",
     "plano-nov2026",
     "resp-analista",
     "rotina"
    ],
-   "updated": "2026-11-02",
+   "updated": "2026-11-03",
    "assignee": "Raphael Rodrigues",
    "subtasks": 0,
    "subtasksDone": 0,
@@ -300,13 +316,14 @@ window.JIRA_DATA = {
    "summary": "[Parcerias] SENAI CIMATEC: plano de ação conjunto e propostas executivas",
    "status": "Tarefas pendentes",
    "cat": "new",
-   "due": "2026-12-11",
+   "due": "2027-01-29",
    "labels": [
     "frente-parcerias",
+    "horizonte-medio",
     "plano-nov2026",
     "resp-diretor"
    ],
-   "updated": "2026-11-02",
+   "updated": "2026-11-03",
    "assignee": "Raphael Rodrigues",
    "subtasks": 0,
    "subtasksDone": 0,
@@ -320,10 +337,11 @@ window.JIRA_DATA = {
    "due": "2026-11-27",
    "labels": [
     "frente-parcerias",
+    "horizonte-curto",
     "plano-nov2026",
     "resp-diretor"
    ],
-   "updated": "2026-11-02",
+   "updated": "2026-11-03",
    "assignee": "Raphael Rodrigues",
    "subtasks": 0,
    "subtasksDone": 0,
@@ -337,10 +355,11 @@ window.JIRA_DATA = {
    "due": "2026-11-30",
    "labels": [
     "frente-parcerias",
+    "horizonte-curto",
     "plano-nov2026",
     "resp-diretor"
    ],
-   "updated": "2026-11-02",
+   "updated": "2026-11-03",
    "assignee": "Raphael Rodrigues",
    "subtasks": 0,
    "subtasksDone": 0,
@@ -351,13 +370,14 @@ window.JIRA_DATA = {
    "summary": "[Parcerias] LabCIM: avaliação para Unidade EMBRAPII",
    "status": "Tarefas pendentes",
    "cat": "new",
-   "due": "2026-12-18",
+   "due": "2027-02-26",
    "labels": [
     "frente-parcerias",
+    "horizonte-medio",
     "plano-nov2026",
     "resp-diretor"
    ],
-   "updated": "2026-11-02",
+   "updated": "2026-11-03",
    "assignee": "Raphael Rodrigues",
    "subtasks": 0,
    "subtasksDone": 0,
@@ -368,13 +388,14 @@ window.JIRA_DATA = {
    "summary": "[Portfólio] Mineração (7 laboratórios): follow-up com 888Hz, Sai do Papel Capital e FUNDEPAR",
    "status": "Tarefas pendentes",
    "cat": "new",
-   "due": "2026-12-11",
+   "due": "2026-12-18",
    "labels": [
     "frente-portfolio",
+    "horizonte-curto",
     "plano-nov2026",
     "resp-diretor"
    ],
-   "updated": "2026-11-02",
+   "updated": "2026-11-03",
    "assignee": "Raphael Rodrigues",
    "subtasks": 0,
    "subtasksDone": 0,
@@ -385,13 +406,14 @@ window.JIRA_DATA = {
    "summary": "[Portfólio] Mapear ativos da UFRN (laboratórios, pesquisadores, PI) na base de parceiros",
    "status": "Tarefas pendentes",
    "cat": "new",
-   "due": "2026-12-18",
+   "due": "2027-01-29",
    "labels": [
     "frente-portfolio",
+    "horizonte-medio",
     "plano-nov2026",
     "resp-analista"
    ],
-   "updated": "2026-11-02",
+   "updated": "2026-11-03",
    "assignee": "Raphael Rodrigues",
    "subtasks": 0,
    "subtasksDone": 0,
@@ -406,10 +428,11 @@ window.JIRA_DATA = {
    "labels": [
     "estrutura",
     "frente-dados",
+    "horizonte-curto",
     "plano-nov2026",
     "resp-diretor"
    ],
-   "updated": "2026-11-02",
+   "updated": "2026-11-03",
    "assignee": "Raphael Rodrigues",
    "subtasks": 0,
    "subtasksDone": 0,
@@ -420,13 +443,14 @@ window.JIRA_DATA = {
    "summary": "[Dados e TD] Agente de IA na Contabilidade: evoluir a PoC para piloto",
    "status": "Em andamento",
    "cat": "indeterminate",
-   "due": "2026-12-18",
+   "due": "2027-02-26",
    "labels": [
     "frente-dados",
+    "horizonte-medio",
     "plano-nov2026",
     "resp-diretor"
    ],
-   "updated": "2026-11-02",
+   "updated": "2026-11-03",
    "assignee": "Raphael Rodrigues",
    "subtasks": 0,
    "subtasksDone": 0,
@@ -437,13 +461,14 @@ window.JIRA_DATA = {
    "summary": "[Dados e TD] SEMURB: transformar o relatório de transformação digital em proposta",
    "status": "Tarefas pendentes",
    "cat": "new",
-   "due": "2026-12-04",
+   "due": "2026-12-18",
    "labels": [
     "frente-dados",
+    "horizonte-curto",
     "plano-nov2026",
     "resp-diretor"
    ],
-   "updated": "2026-11-02",
+   "updated": "2026-11-03",
    "assignee": "Raphael Rodrigues",
    "subtasks": 0,
    "subtasksDone": 0,
@@ -454,13 +479,14 @@ window.JIRA_DATA = {
    "summary": "[Dados e TD] Novo site da área: painel, rede de parceiros e matching com editais",
    "status": "Em andamento",
    "cat": "indeterminate",
-   "due": "2026-11-13",
+   "due": "2026-11-07",
    "labels": [
     "frente-dados",
+    "horizonte-curto",
     "plano-nov2026",
     "resp-diretor"
    ],
-   "updated": "2026-11-02",
+   "updated": "2026-11-03",
    "assignee": "Raphael Rodrigues",
    "subtasks": 0,
    "subtasksDone": 0,
@@ -471,13 +497,14 @@ window.JIRA_DATA = {
    "summary": "[ICT] ICT FUNPEC: do modelo concluído à aprovação e ao NIT misto com a AGIR",
    "status": "Tarefas pendentes",
    "cat": "new",
-   "due": "2027-01-29",
+   "due": "2027-02-26",
    "labels": [
     "frente-ict",
+    "horizonte-medio",
     "plano-nov2026",
     "resp-diretor"
    ],
-   "updated": "2026-11-02",
+   "updated": "2026-11-03",
    "assignee": "Raphael Rodrigues",
    "subtasks": 0,
    "subtasksDone": 0,
@@ -492,11 +519,12 @@ window.JIRA_DATA = {
    "labels": [
     "estrutura",
     "frente-gestao",
+    "horizonte-curto",
     "plano-nov2026",
     "prioridade-alta",
     "resp-diretor"
    ],
-   "updated": "2026-11-02",
+   "updated": "2026-11-03",
    "assignee": "Raphael Rodrigues",
    "subtasks": 0,
    "subtasksDone": 0,
@@ -507,13 +535,14 @@ window.JIRA_DATA = {
    "summary": "[Gestão] Manual da Diretoria: publicar POPs e treinar o time",
    "status": "Tarefas pendentes",
    "cat": "new",
-   "due": "2026-12-11",
+   "due": "2027-02-26",
    "labels": [
     "frente-gestao",
+    "horizonte-medio",
     "plano-nov2026",
     "resp-gerente"
    ],
-   "updated": "2026-11-02",
+   "updated": "2026-11-03",
    "assignee": "Raphael Rodrigues",
    "subtasks": 0,
    "subtasksDone": 0,
@@ -524,14 +553,15 @@ window.JIRA_DATA = {
    "summary": "[Gestão] Reporte de consolidação ao Diretor-Presidente",
    "status": "Tarefas pendentes",
    "cat": "new",
-   "due": "2026-11-10",
+   "due": "2026-11-06",
    "labels": [
     "frente-gestao",
+    "horizonte-curto",
     "plano-nov2026",
     "prioridade-alta",
     "resp-diretor"
    ],
-   "updated": "2026-11-02",
+   "updated": "2026-11-03",
    "assignee": "Raphael Rodrigues",
    "subtasks": 0,
    "subtasksDone": 0,
@@ -542,18 +572,39 @@ window.JIRA_DATA = {
    "summary": "[Gestão] Rotina de acompanhamento: reunião semanal e reporte mensal",
    "status": "Tarefas pendentes",
    "cat": "new",
-   "due": "2026-11-30",
+   "due": "2026-12-04",
    "labels": [
     "frente-gestao",
+    "horizonte-curto",
     "plano-nov2026",
     "resp-gerente",
     "rotina"
    ],
-   "updated": "2026-11-02",
+   "updated": "2026-11-03",
    "assignee": "Raphael Rodrigues",
    "subtasks": 0,
    "subtasksDone": 0,
    "description": "**Frente:** Gestão da área\n**Responsável:** Gerente (pauta) e Diretor (decisões)\n\n**Rotina**\n\n* Semanal (30 min): cards vencendo, bloqueios e novos editais pelo matching\n* Mensal: relatório de atividades e indicadores (propostas, valor captado, parceiros, pipeline)\n\n**Entregável:** primeiro relatório mensal no novo formato (novembro)."
+  },
+  {
+   "key": "NEIF-376",
+   "summary": "[Dados e TD] Piloto de automação no Setor de Projetos: mapear atividades, alinhar POPs e lançar os primeiros robôs",
+   "status": "Em andamento",
+   "cat": "indeterminate",
+   "due": "2027-02-26",
+   "labels": [
+    "frente-dados",
+    "horizonte-medio",
+    "plano-nov2026",
+    "prioridade-alta",
+    "resp-diretor",
+    "resp-gerente"
+   ],
+   "updated": "2026-11-03",
+   "assignee": "Raphael Rodrigues",
+   "subtasks": 5,
+   "subtasksDone": 0,
+   "description": "**Frente:** Dados e transformação digital\n**Responsável:** Diretor (com a Gerente nos POPs e o Setor de Projetos como área piloto)\n**Objetivo:** começar a transformação digital da FUNPEC por uma área piloto, o Setor de Projetos, e colocar em operação os primeiros robôs de automação.\n\n**Etapas**\n\n* Mapear as atividades do Setor de Projetos: volume, tempo gasto, regras e sistemas usados (até 27/11)\n* Priorizar as rotinas candidatas a robô por volume, regra clara e risco (até 04/12)\n* Alinhar os POPs do Setor de Projetos com os POPs da Diretoria (POPIC04, transição) e com a Controladoria (até 11/12)\n* Desenhar e homologar os primeiros robôs com o Setor de Projetos (até 29/01/2027)\n* Colocar em produção e medir o ganho de tempo (até 26/02/2027)\n\n**Regras do Manual:** resultado de IA ou automação é revisado por uma pessoa antes de subsidiar decisão; bases de dados só com avaliação de LGPD (seção 8.3).\n\n**Entregável:** primeiros robôs em produção no Setor de Projetos, com ganho medido e POPs atualizados."
   }
  ]
 };
