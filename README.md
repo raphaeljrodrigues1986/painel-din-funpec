@@ -8,7 +8,7 @@ Painel executivo da Diretoria de Inovação e Novos Negócios da FUNPEC. Site es
 |---|---|---|
 | Visão geral | Frentes de atuação, agenda dos próximos 21 dias e prioridades | Jira (`data/jira.js`) |
 | Atividades | Quadro e lista dos cards, com filtros por frente, responsável e prazo | Jira |
-| Rede e matching | Grafo de parceiros com filtros de maturidade, tipo, área e interesse; matching de parceiros para um projeto ou edital | `data/parceiros.js` + `data/labs.js` |
+| Rede e matching | Grafo de parceiros com filtros de maturidade, tipo, área e interesse; matching de parceiros para um projeto ou edital | `data/parceiros.js` + `data/portfolio_mineral.js` + `data/labs.js` |
 | Pipeline | Parceiros por estágio da relação, com situação e próximo passo | `data/parceiros.js` |
 | Indicadores | Os 30 indicadores pactuados, com lançamento do realizado | `data/indicadores.js` |
 | Equipe e rotina | Cards por responsável, rotina semanal e pauta do kickoff | Jira |
@@ -42,7 +42,7 @@ Edite `data/parceiros.js`. Cada parceiro tem `maturidade` (1 a 4), `tipo`, `area
 
 ## Como o matching funciona
 
-O texto do projeto ou edital é lido para identificar área, interesse e financiador. Cada parceiro recebe uma nota que soma aderência de área (peso maior), interesse, experiência com o financiador citado, termos em comum, maturidade da relação com a FUNPEC e, nos laboratórios, o potencial deep tech. As opções "exige empresa", "exige ICT" e "busca investidor" reforçam o papel correspondente. O resultado é agrupado por papel no projeto e sugere um arranjo inicial; ele apoia a decisão e não substitui a avaliação técnica.
+O texto do projeto ou edital é lido para identificar setor, financiador e termos técnicos. Só entra no resultado quem tem aderência temática: área em comum, pelo menos dois termos técnicos em comum (campo `palavras` dos parceiros) ou, para financiadores, o financiador citado. Áreas valem mais quando o parceiro é especializado. Interesse genérico, maturidade da relação e potencial deep tech apenas ordenam quem já é aderente. Quando ninguém é aderente, o painel aponta a lacuna na rede. As opções "exige empresa", "exige ICT" e "busca investidor" reforçam o papel correspondente. O resultado é agrupado por papel no projeto e sugere um arranjo inicial; ele apoia a decisão e não substitui a avaliação técnica.
 
 ## Publicação
 

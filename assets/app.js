@@ -119,14 +119,16 @@
   const V = window.VOCAB;
   const AREA_KW = {
     saude: ["saude", "hospital", "clinic", "farmac", "medic", "biotec", "genom", "cancer", "oncolog", "diagnost", "sus ", "vacina", "polilaminina", "neuro", "terapia", "doenca"],
-    mineracao: ["miner", "material", "metal", "aco", "siderur", "ciment", "ceram", "nano", "magnet", "scheelita", "tungst", "rocha", "geolog", "metalurg"],
+    mineracao: ["miner", "materiais", "metal", " aco ", "siderur", "ciment", "ceram", "nano", "magnet", "scheelita", "tungst", "rocha", "geolog", "metalurg", "rejeito", "barragem", "barragens", "talude", "lavra", "jazida", "terras raras", "litio"],
     energia: ["energia", "petrol", "oleo", "gas", "hidrogenio", "eolic", "solar", "renovav", "bateria", "eletric", "offshore", "combustiv", "poco", "pocos"],
-    digital: ["inteligencia artificial", " ia ", "dados", "digital", "software", "computa", "algoritm", "automac", "telecom", "nuvem", "alto desempenho", "machine learning", "sistema"],
+    digital: ["inteligencia artificial", " ia ", "dados", "digital", "software", "computa", "algoritm", "automac", "telecom", "nuvem", "alto desempenho", "machine learning", "visao computacional", "sensor", "iot"],
     agro: ["agro", "aliment", "semente", "abelha", " mel", "coco", "pesca", "bioeconomia", "agricol", "pecuar", "fruta"],
     ambiente: ["ambient", "biodivers", "fauna", "conserva", "clima", "carbono", "restaura", "icmbio", "sustentab", "caatinga", "ecolog"],
-    industria: ["industri", "manufatura", "processo produtivo", "produtiv", "textil", "engenharia", "fabrica", "chao de fabrica"],
+    industria: ["industri", "manufatura", "processo produtivo", "produtividade", "fabrica", "chao de fabrica", "automacao industrial"],
     cidades: ["prefeitura", "municip", "governo", "publico", "urban", "cidade", "mobilidade", "gestao publica", "smart"],
-    quimica: ["quimic", "farmac", "cosmet", "formulac", "aditivo", "molecul"]
+    quimica: ["quimic", "farmac", "cosmet", "formulac", "aditivo", "molecul", "catalis"],
+    textil: ["textil", "texteis", "vestuario", "moda", "confecc", "roupa", "tecido", "fibra", "calcad", "fio ", "fios ", "jeans", "malha"],
+    construcao: ["construcao civil", "construcao", "edificac", "concreto", "cimento", "agregado", "pavimenta", "habitac", "obra"]
   };
   const INT_KW = {
     pdi: ["pesquisa", "desenvolvimento", "p&d", "pd&i", "inovacao", "prototip", "pd ", "tecnolog"],
@@ -143,12 +145,13 @@
     Sebrae: ["sebrae"], FAPERN: ["fapern"], CNPq: ["cnpq"], ANP: ["anp", "petrol", "oleo e gas", "poco"],
     ANEEL: ["aneel", "setor eletrico"], MS: ["ministerio da saude", "pronon", " sus", "ms "], "Lei de Informática": ["lei de informatica"]
   };
-  const achar = (texto, dic) => Object.keys(dic).filter((k) => dic[k].some((w) => texto.includes(w)));
+  // casa termos no início de palavra (" moda" não casa com "acomodar"); termo com espaço final exige palavra inteira
+  const achar = (texto, dic) => Object.keys(dic).filter((k) => dic[k].some((w) => texto.includes(" " + w.trim() + (w.endsWith(" ") ? " " : ""))));
 
   const LABS_RAW = (window.__FUNPEC_LABS_DATA__ && window.__FUNPEC_LABS_DATA__.labs) || [];
   const slug = (s) => norm(s).replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 40);
   const labs = LABS_RAW.map((l) => {
-    const blob = " " + norm([l.nome, l.area, l.dominio, l.diferenciais, l.infra].join(" ")) + " ";
+    const blob = " " + norm([l.nome, l.area, l.dominio, l.diferenciais, l.infra].join(" ")).replace(/[^a-z0-9]+/g, " ") + " ";
     const areas = achar(blob, AREA_KW);
     const comerc = norm(l.comercializa).startsWith("sim");
     const ints = ["pdi", "editais"];
@@ -168,9 +171,17 @@
     };
   });
   const parceiros = (window.PARCEIROS || []).map((p) => Object.assign({}, p, {
-    blob: " " + norm([p.nome, p.situacao, p.proximo, (p.areas || []).map((a) => V.areas[a]).join(" ")].join(" ")) + " "
+    blob: " " + norm([p.nome, p.palavras, p.situacao, (p.areas || []).map((a) => V.areas[a]).join(" ")].join(" ")).replace(/[^a-z0-9]+/g, " ") + " "
   }));
-  const TODOS = parceiros.concat(labs);
+  const portfolio = (window.PORTFOLIO_MINERAL || []).map((m) => ({
+    id: m.id, nome: m.nome, tipo: "lab", maturidade: 2, uf: "RN", portfolio: true, areas: m.areas, interesses: m.interesses,
+    papeis: ["executor", "infraestrutura"], editais: ["FINEP", "CNPq", "EMBRAPII"], potencial: m.potencial,
+    vinculo: "UFRN · portfólio Minerais Estratégicos (ProPesq)", areaTxt: m.etapa, coord: null, labNome: m.lab,
+    recurso: m.recurso, ativo: m.ativo, situacao: m.situacao,
+    proximo: "Definir tese com os investidores do portfólio (888Hz, Sai do Papel, FUNDEPAR).", jira: ["NEIF-365"],
+    blob: " " + norm([m.nome, m.lab, m.etapa, m.recurso, m.ativo, m.situacao, m.palavras].join(" ")).replace(/[^a-z0-9]+/g, " ") + " "
+  }));
+  const TODOS = parceiros.concat(portfolio, labs);
   const porId = new Map(TODOS.map((n) => [n.id, n]));
   const resolver = (ref) => {
     if (!ref.startsWith("lab:")) return porId.get(ref);
@@ -187,6 +198,7 @@
       <dl class="kv">
         <dt>Situação</dt><dd>${esc(p.situacao || "—")}</dd>
         <dt>Próximo passo</dt><dd>${esc(p.proximo || "—")}</dd>
+        ${p.portfolio ? `<dt>Laboratório</dt><dd>${esc(p.labNome)}</dd><dt>Etapa da cadeia</dt><dd>${esc(p.areaTxt)}</dd><dt>Recurso mineral</dt><dd>${esc(p.recurso)}</dd><dt>Ativo a gerar</dt><dd>${esc(p.ativo)}</dd>` : ""}
         ${p.coord ? `<dt>Coordenação</dt><dd>${esc(p.coord)}</dd><dt>Vínculo</dt><dd>${esc(p.vinculo || "")} · ${esc(p.cidade || "")}</dd><dt>Atuação</dt><dd>${esc(p.areaTxt || "")}</dd><dt>Comercializa</dt><dd>${esc(p.comercializa || "—")}</dd>` : ""}
         <dt>Áreas</dt><dd>${lista(p.areas, V.areas)}</dd>
         <dt>Interesses</dt><dd>${lista(p.interesses, V.interesses)}</dd>
@@ -206,7 +218,7 @@
     { v: "30", s: "+ mi", k: "R$ em propostas em carteira" },
     { v: String(parceiros.filter((p) => p.tipo === "empresa").length), k: "empresas na carteira de relacionamento" },
     { v: String(externos.length), k: "instituições e fundos na rede" },
-    { v: String(labs.length), k: "laboratórios UFRN mapeados" },
+    { v: String(labs.length + portfolio.length), k: `laboratórios e projetos UFRN mapeados · ${portfolio.length} em minerais estratégicos` },
     { v: String(ativos.length), k: `atividades ativas · ${cards.filter((c) => c.cat === "indeterminate").length} em andamento` }
   ];
   $("#figures").innerHTML = figs.map((f) => `<div class="figure"><div class="v">${f.v}${f.s ? `<small>${f.s}</small>` : ""}</div><div class="k">${f.k}</div></div>`).join("");
@@ -321,7 +333,7 @@
   chips($("#cTipo"), V.tipos, "tipo");
   chips($("#cArea"), V.areas, "area");
   chips($("#cInt"), V.interesses, "int");
-  const LAB_OPTS = { todos: "Todos", alto: "Só potencial alto", ocultar: "Ocultar" };
+  const LAB_OPTS = { todos: "Todos", portfolio: "Portfólio mineral", alto: "Só potencial alto", ocultar: "Ocultar" };
   $("#cLab").innerHTML = Object.keys(LAB_OPTS).map((k) => `<button type="button" class="chip" data-k="${k}" aria-pressed="${filtro.lab === k}">${LAB_OPTS[k]}</button>`).join("");
   $("#cLab").addEventListener("click", (e) => {
     const b = e.target.closest(".chip"); if (!b) return; filtro.lab = b.dataset.k;
@@ -334,7 +346,7 @@
   });
   const passa = (n) => {
     if (n.id === "funpec") return true;
-    if (n.tipo === "lab" && (filtro.lab === "ocultar" || (filtro.lab === "alto" && n.potencial !== "ALTO"))) return false;
+    if (n.tipo === "lab" && (filtro.lab === "ocultar" || (filtro.lab === "alto" && n.potencial !== "ALTO") || (filtro.lab === "portfolio" && !n.portfolio))) return false;
     if (filtro.mat.length && !filtro.mat.includes(n.maturidade)) return false;
     if (filtro.tipo.length && !filtro.tipo.includes(n.tipo)) return false;
     if (filtro.area.length && !(n.areas || []).some((a) => filtro.area.includes(a))) return false;
@@ -350,22 +362,22 @@
     const svg = d3.select("#net");
     const box = svg.node().getBoundingClientRect(); const W = box.width, H = box.height;
     svg.attr("viewBox", [0, 0, W, H]);
-    const nodes = [{ id: "funpec", nome: "FUNPEC", tipo: "core", maturidade: 5 }].concat(TODOS.map((n) => Object.assign({}, n)));
+    const nodes = TODOS.map((n) => Object.assign({}, n)).concat([{ id: "funpec", nome: "FUNPEC", tipo: "core", maturidade: 5 }]);
     const nmap = new Map(nodes.map((n) => [n.id, n]));
     const links = [];
-    const add = (a, b, tipo, nome) => { if (a && b && a !== b) links.push({ source: a, target: b, tipo, nome }); };
+    const add = (a, b, tipo, nome, k) => { if (a && b && a !== b) links.push({ source: a, target: b, tipo, nome, k: k || 2 }); };
     parceiros.forEach((p) => add("funpec", p.id, "core"));
-    labs.forEach((l) => add("ufrn", l.id, "lab"));
+    labs.concat(portfolio).forEach((l) => add("ufrn", l.id, "lab"));
     (window.PROJETOS || []).forEach((pr) => {
       const ids = pr.membros.map(resolver).filter(Boolean).map((n) => n.id);
-      for (let i = 0; i < ids.length; i++) for (let j = i + 1; j < ids.length; j++) add(ids[i], ids[j], "proj", pr.nome);
+      for (let i = 0; i < ids.length; i++) for (let j = i + 1; j < ids.length; j++) add(ids[i], ids[j], "proj", pr.nome, ids.length);
     });
     const raio = (n) => n.id === "funpec" ? 26 : n.id === "ufrn" ? 14 : n.tipo === "lab" ? (n.maturidade ? 8 : n.potencial === "ALTO" ? 5.5 : 4) : 5 + n.maturidade * 2.2;
     const sim = d3.forceSimulation(nodes)
-      .force("link", d3.forceLink(links).id((d) => d.id).distance((l) => l.tipo === "core" ? 250 - (l.target.maturidade || 0) * 30 : l.tipo === "lab" ? 55 : 90).strength((l) => l.tipo === "proj" ? 0.35 : l.tipo === "lab" ? 0.5 : 0.25))
+      .force("link", d3.forceLink(links).id((d) => d.id).distance((l) => l.tipo === "core" ? 250 - (l.target.maturidade || 0) * 30 : l.tipo === "lab" ? 55 : 70 + 10 * l.k).strength((l) => l.tipo === "proj" ? 0.7 / l.k : l.tipo === "lab" ? 0.5 : 0.25))
       .force("charge", d3.forceManyBody().strength((d) => d.tipo === "lab" ? -40 : -380))
       .force("center", d3.forceCenter(W / 2, H / 2))
-      .force("collide", d3.forceCollide().radius((d) => raio(d) + 3))
+      .force("collide", d3.forceCollide().radius((d) => raio(d) + (d.tipo === "lab" && !d.maturidade ? 3 : 14)))
       .force("x", d3.forceX(W / 2).strength(0.02)).force("y", d3.forceY(H / 2).strength(0.05));
     const gLinks = svg.append("g");
     const link = gLinks.selectAll("line").data(links).join("line")
@@ -451,44 +463,57 @@
   });
   $("#matchForm").addEventListener("submit", (e) => { e.preventDefault(); executarMatching(); });
   $("#mLimpar").addEventListener("click", () => { $("#mTexto").value = ""; ["mEmpresa", "mIct", "mInvest"].forEach((id) => { $("#" + id).checked = false; }); destaque = null; renderMatchVazio(); aplicarFiltro(); });
-  const STOP = new Set("para com sem uma umas uns dos das nos nas pelo pela pelos pelas como mais que entre sobre quer projeto edital chamada parceiro parceiros empresa empresas apoio area areas".split(" "));
+  const STOP = new Set(("para com sem uma umas uns dos das nos nas pelo pela pelos pelas como mais que entre sobre quer quero " +
+    "projeto projetos edital editais chamada chamadas parceiro parceiros empresa empresas apoio area areas pesquisa desenvolvimento " +
+    "inovacao inovacoes tecnologia tecnologias tecnologica solucao solucoes setor proposta propostas recurso recursos parceria " +
+    "finep bndes embrapii sebrae fapern cnpq aneel executora executor coparticipante participacao programa programas objetivo objetivos busca buscar procura procurando").split(" "));
   function renderMatchVazio() {
     $("#matchOut").innerHTML = `<div class="empty" style="text-align:left;padding:8px 0"><div class="eyebrow" style="margin-bottom:8px">Como funciona</div>
-      <p style="margin:0 0 10px">O texto é lido para identificar área, interesse e financiador. Cada parceiro recebe uma nota pela aderência de área (peso maior), interesse, experiência com o financiador citado, maturidade da relação com a FUNPEC e, nos laboratórios, potencial deep tech.</p>
-      <p style="margin:0">O resultado sai agrupado pelo papel no projeto (executor, empresa, financiador ou investidor e apoio) e destaca os indicados na rede acima.</p></div>`;
+      <p style="margin:0 0 10px">O texto é lido para identificar o setor ou tema, o financiador e os termos técnicos. Só entra no resultado quem tem aderência ao tema: área em comum, termo técnico em comum ou, no caso de financiadores, o financiador citado. Interesse genérico (PD&amp;I, editais) e a maturidade da relação servem apenas para ordenar quem já é aderente.</p>
+      <p style="margin:0">O resultado sai agrupado pelo papel no projeto e destaca os indicados na rede acima.</p></div>`;
   }
   function executarMatching() {
     const bruto = $("#mTexto").value.trim();
     if (!bruto) { $("#matchOut").innerHTML = '<div class="empty">Descreva o projeto ou edital, ou escolha um exemplo.</div>'; return; }
-    const t = " " + norm(bruto) + " ";
+    const t = " " + norm(bruto).replace(/[^a-z0-9&]+/g, " ") + " ";
     const areasQ = achar(t, AREA_KW), intsQ = achar(t, INT_KW), finQ = achar(t, FIN_KW);
     const tokens = Array.from(new Set(t.split(/[^a-z0-9]+/).filter((w) => w.length >= 5 && !STOP.has(w))));
+    const raiz = (w) => w.length > 6 ? w.slice(0, Math.max(5, w.length - 3)) : w;
     const querEmp = $("#mEmpresa").checked, querIct = $("#mIct").checked, querInv = $("#mInvest").checked;
     const res = [];
     TODOS.forEach((n) => {
-      let s = 0; const why = [];
+      const why = [];
+      const nA = Math.max(1, (n.areas || []).length);
       const a = (n.areas || []).filter((x) => areasQ.includes(x));
-      if (a.length) { s += 3 * a.length; why.push("área: " + a.map((x) => V.areas[x].toLowerCase()).join(", ")); }
-      const i = (n.interesses || []).filter((x) => intsQ.includes(x));
-      if (i.length) { s += 1.2 * i.length; why.push("interesse em " + i.map((x) => V.interesses[x].toLowerCase()).join(", ")); }
+      const sArea = a.length ? 4 * a.length / Math.sqrt(nA) : 0;
+      if (a.length) why.push("área: " + a.map((x) => V.areas[x].toLowerCase()).join(", "));
+      const hits = tokens.filter((w) => n.blob.includes(" " + raiz(w)) || n.blob.includes(raiz(w) + " ")).slice(0, 5);
+      const sTermo = 1.6 * hits.length;
+      if (hits.length) why.push("termos em comum: " + hits.join(", "));
       const f = (n.editais || []).filter((x) => finQ.includes(x));
-      if (f.length) { s += 2 * f.length; why.push("opera com " + f.join(", ")); }
-      const hits = tokens.filter((w) => n.blob.includes(w)).slice(0, 4);
-      if (hits.length) { s += 0.9 * hits.length; why.push("cita " + hits.join(", ")); }
-      if (s === 0) return;
-      if (areasQ.length && !a.length) s *= 0.35;
-      if (n.tipo === "fomento" && !f.length && !querInv) s *= 0.4;
-      if (n.maturidade) { s += n.maturidade * 0.5; if (n.maturidade >= 3) why.push("relação " + V.maturidade[n.maturidade].toLowerCase()); }
-      if (n.potencial === "ALTO") { s += 1; why.push("potencial deep tech alto"); } else if (n.potencial === "MEDIO") s += 0.4;
+      const ehFin = n.tipo === "fomento" || n.tipo === "fundo";
+      const sFin = f.length ? (ehFin ? 4 : 1.2) * f.length : 0;
+      if (f.length) why.push((ehFin ? "é o financiador citado: " : "já opera com ") + f.join(", "));
+      // aderência temática obrigatória: área ou termo em comum; financiador citado vale só para quem financia
+      const temTema = sArea > 0 || sTermo > 0 || (ehFin && sFin > 0);
+      if (!temTema) return;
+      if (!a.length && hits.length < 2 && !(ehFin && sFin)) return;
+      let s = sArea + sTermo + sFin;
+      const i = (n.interesses || []).filter((x) => intsQ.includes(x));
+      if (i.length) { s += 0.6 * i.length; why.push("interesse em " + i.map((x) => V.interesses[x].toLowerCase()).join(", ")); }
+      s *= 1 + 0.07 * (n.maturidade || 0);
+      if (n.maturidade >= 2) why.push("relação: " + V.maturidade[n.maturidade].toLowerCase());
+      if (n.portfolio) why.push("portfólio minerais estratégicos");
+      if (n.potencial === "ALTO") { s *= 1.12; why.push("potencial deep tech alto"); }
       const pap = n.papeis || [];
-      if (querEmp && pap.includes("empresa")) s += 2.5;
-      if (querIct && pap.includes("executor")) s += 2;
-      if (querInv && (pap.includes("investidor") || pap.includes("financiador"))) s += 2.5;
+      if (querEmp && pap.includes("empresa")) s *= 1.35;
+      if (querIct && pap.includes("executor")) s *= 1.25;
+      if (querInv && (pap.includes("investidor") || pap.includes("financiador"))) s *= 1.35;
       res.push({ n, s, why });
     });
     if (!res.length) {
       destaque = null; aplicarFiltro();
-      $("#matchOut").innerHTML = '<div class="empty">Nenhum parceiro aderente. Cite a área (mineração, saúde, energia…), o financiador (FINEP, BNDES, EMBRAPII…) ou o tipo de parceiro que procura.</div>';
+      $("#matchOut").innerHTML = `<div class="empty">Nenhum parceiro da base tem aderência a esse tema${areasQ.length ? " (" + esc(areasQ.map((x) => V.areas[x]).join(", ")) + ")" : ""}. Isso indica uma lacuna na rede: vale prospectar parceiros desse setor. Você também pode citar o setor com outras palavras, o financiador ou uma tecnologia.</div>`;
       return;
     }
     const max = Math.max(...res.map((r) => r.s));
