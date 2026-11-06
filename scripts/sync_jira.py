@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-"""Exporta os cards do Jira (projeto NEIF) para data/jira.js, lido pelo painel.
+"""Exporta os cards do Jira para o painel:
+  - projeto NEIF (atividades da Diretoria) -> data/jira.js
+  - projeto MEADP (funil de captação e demandas) -> data/funil.js
 
 Uso local:
     JIRA_EMAIL=voce@exemplo.com JIRA_API_TOKEN=xxxx python3 scripts/sync_jira.py
@@ -9,6 +11,7 @@ usando os segredos JIRA_EMAIL e JIRA_API_TOKEN do repositório.
 O token nunca vai para o site: só o arquivo gerado (data/jira.js) é publicado.
 """
 import base64
+import re
 import json
 import os
 import sys
@@ -19,7 +22,8 @@ from datetime import datetime, timezone
 SITE = os.environ.get("JIRA_SITE", "https://funpec2026.atlassian.net")
 JQL = os.environ.get("JIRA_JQL", "project = NEIF AND labels = plano-nov2026 ORDER BY duedate ASC")
 FIELDS = "summary,status,labels,duedate,description,updated,assignee,subtasks"
-SAIDA = os.path.join(os.path.dirname(__file__), "..", "data", "jira.js")
+FUNIL_JQL = os.environ.get("FUNIL_JQL", "project = MEADP ORDER BY updated DESC")
+DATA = os.path.join(os.path.dirname(__file__), "..", "data")
 
 
 def adf_para_texto(no, nivel=0):
@@ -49,7 +53,7 @@ def adf_para_texto(no, nivel=0):
     return "".join(adf_para_texto(f, nivel) for f in filhos)
 
 
-def buscar():
+def buscar(jql):
     email = os.environ.get("JIRA_EMAIL")
     token = os.environ.get("JIRA_API_TOKEN")
     if not email or not token:
@@ -57,7 +61,7 @@ def buscar():
     auth = base64.b64encode(f"{email}:{token}".encode()).decode()
     issues, proximo = [], None
     while True:
-        params = {"jql": JQL, "fields": FIELDS, "maxResults": 100}
+        params = {"jql": jql, "fields": FIELDS, "maxResults": 100}
         if proximo:
             params["nextPageToken"] = proximo
         url = f"{SITE}/rest/api/3/search/jql?" + urllib.parse.urlencode(params)
@@ -90,23 +94,30 @@ def converter(issues):
             "subtasksDone": sum(1 for s in subs if ((s.get("fields") or {}).get("status") or {}).get("statusCategory", {}).get("key") == "done"),
             "description": adf_para_texto(f.get("description")).strip(),
         })
+        m = re.search(r"\*\*Próximo passo:\*\*\s*(.+)", saida[-1]["description"])
+        saida[-1]["proximo"] = m.group(1).strip() if m else ""
     return saida
 
 
-def main():
-    cards = converter(buscar())
+def gravar(arquivo, variavel, jql, cards, comentario):
     pacote = {
         "geradoEm": datetime.now(timezone.utc).isoformat(timespec="minutes"),
-        "fonte": f"{SITE} · JQL: {JQL}",
+        "fonte": f"{SITE} · JQL: {jql}",
         "base": f"{SITE}/browse/",
         "cards": cards,
     }
-    with open(SAIDA, "w", encoding="utf-8") as fp:
-        fp.write("/* Gerado por scripts/sync_jira.py. Não edite à mão. */\n")
-        fp.write("window.JIRA_DATA = ")
+    caminho = os.path.join(DATA, arquivo)
+    with open(caminho, "w", encoding="utf-8") as fp:
+        fp.write(f"/* {comentario} Gerado por scripts/sync_jira.py. Não edite à mão. */\n")
+        fp.write(f"window.{variavel} = ")
         json.dump(pacote, fp, ensure_ascii=False, indent=1)
         fp.write(";\n")
-    print(f"{len(cards)} cards exportados para {os.path.normpath(SAIDA)}")
+    print(f"{len(cards)} cards exportados para {os.path.normpath(caminho)}")
+
+
+def main():
+    gravar("jira.js", "JIRA_DATA", JQL, converter(buscar(JQL)), "Atividades da Diretoria (NEIF).")
+    gravar("funil.js", "FUNIL_DATA", FUNIL_JQL, converter(buscar(FUNIL_JQL)), "Funil de captação e demandas (MEADP).")
 
 
 if __name__ == "__main__":

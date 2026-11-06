@@ -147,7 +147,16 @@
     <!-- PIPELINE -->
     <section class="view" id="v-pipeline" hidden aria-labelledby="h-pipe">
       <div class="sec-head">
-        <div><div class="eyebrow">Carteira de relacionamento</div><h2 id="h-pipe">Pipeline por estágio</h2>
+        <div><div class="eyebrow">Funil de captação e demandas · Jira MEADP</div><h2 id="h-funil">Do pedido ao contrato</h2>
+        <p>Demandas da UFRN, de outras ICTs, de órgãos públicos e de empresas, e editais em acompanhamento, por etapa. <span id="funilFonte" class="small muted"></span></p></div>
+        <div class="chips" id="fOrigem" role="group" aria-label="Filtrar funil por origem"></div>
+      </div>
+      <div class="kpis funil-kpis" id="funilKpis"></div>
+      <div class="pipe pipe5" id="funilOut"></div>
+      <details class="panel funil-extra"><summary id="funilExtraSum">Radar de editais e encerrados</summary><div class="pipe pipe2" id="funilExtra"></div></details>
+
+      <div class="sec-head" style="margin-top:40px">
+        <div><div class="eyebrow">Carteira de relacionamento</div><h2 id="h-pipe">Parceiros por estágio da relação</h2>
         <p>Empresas, instituições e fundos por estágio da relação, com a situação atual e o próximo passo combinado.</p></div>
         <select class="select" id="pTipo" aria-label="Filtrar pipeline por tipo"></select>
       </div>
@@ -189,6 +198,7 @@
         <div class="panel" style="padding:22px 24px">
           <dl class="kv">
             <dt>Atividades</dt><dd>Vêm do Jira (cards com a etiqueta <span class="mono">plano-nov2026</span>). A rotina do GitHub atualiza o arquivo <span class="mono">data/jira.js</span> todo dia útil às 7h.</dd>
+            <dt>Funil</dt><dd>Vem do projeto Jira <span class="mono">MEADP</span> (Mapeamento e acompanhamento de projetos), atualizado pela mesma rotina em <span class="mono">data/funil.js</span>.</dd>
             <dt>Frente</dt><dd>Etiqueta <span class="mono">frente-captacao</span>, <span class="mono">frente-pdi</span>, <span class="mono">frente-parcerias</span>, <span class="mono">frente-portfolio</span>, <span class="mono">frente-dados</span>, <span class="mono">frente-ict</span>, <span class="mono">frente-institucional</span>, <span class="mono">frente-programas</span> ou <span class="mono">frente-gestao</span>.</dd>
             <dt>Responsável</dt><dd>Etiqueta <span class="mono">resp-diretor</span>, <span class="mono">resp-gerente</span> ou <span class="mono">resp-analista</span>.</dd>
             <dt>Parceiros</dt><dd>Arquivo <span class="mono">data/parceiros.js</span>: maturidade, áreas, interesses, situação e próximo passo.</dd>
@@ -214,6 +224,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
 <script src="data/jira.js"></script>
+<script src="data/funil.js"></script>
 <script src="data/parceiros.js"></script>
 <script src="data/portfolio_mineral.js"></script>
 <script src="data/labs.js"></script>

@@ -544,6 +544,38 @@
   $("#matchOut").addEventListener("click", (e) => { if (e.target.closest("[data-parceiro]")) e.preventDefault(); });
   renderMatchVazio();
 
+  /* ---------------- funil (Jira MEADP) ---------------- */
+  const FUNIL = window.FUNIL_DATA || { cards: [], base: JIRA.base };
+  const ETAPAS = [["entrada", "Entrada"], ["elaboracao", "Proposta em elaboração"], ["enviada", "Proposta enviada"], ["formalizacao", "Em formalização"], ["aprovado", "Aprovado"]];
+  const EXTRAS = [["radar", "Radar de editais"], ["encerrado", "Encerrados"]];
+  const ORIGENS = { "ufrn": "UFRN", "outra-ict": "Outra ICT", "orgao-publico": "Órgão público", "empresa": "Empresa", "edital": "Edital", "institucional": "Institucional" };
+  const STATUS_ETAPA = { "entrada": "entrada", "proposta em elaboracao": "elaboracao", "em elaboracao": "elaboracao", "proposta enviada": "enviada", "enviada": "enviada", "em formalizacao": "formalizacao", "formalizacao": "formalizacao", "aprovado": "aprovado", "radar de editais": "radar", "radar": "radar", "encerrado": "encerrado", "encerrados": "encerrado" };
+  const etapaDe = (c) => STATUS_ETAPA[norm(c.status || "")] || ((c.labels || []).find((l) => l.startsWith("etapa-")) || "etapa-entrada").slice(6);
+  const funil = FUNIL.cards.map((c) => ({ ...c, etapa: etapaDe(c), origens: (c.labels || []).filter((l) => l.startsWith("origem-")).map((l) => l.slice(7)), atencao: (c.labels || []).includes("atencao"), prioridade: (c.labels || []).includes("prioridade-diretoria") }));
+  let fOrigem = "";
+  $("#fOrigem").innerHTML = ['<button type="button" class="chip" data-o="" aria-pressed="true">Todas</button>'].concat(Object.keys(ORIGENS).map((k) => `<button type="button" class="chip" data-o="${k}" aria-pressed="false">${ORIGENS[k]}</button>`)).join("");
+  $("#fOrigem").addEventListener("click", (e) => { const b = e.target.closest("[data-o]"); if (!b) return; fOrigem = b.dataset.o; document.querySelectorAll("#fOrigem .chip").forEach((x) => x.setAttribute("aria-pressed", String(x === b))); renderFunil(); });
+  function cardFunil(c) {
+    return `<a class="card" href="${esc(FUNIL.base + c.key)}" target="_blank" rel="noopener">
+      <div class="meta"><span>${c.origens.map((o) => esc(ORIGENS[o] || o)).join(" · ")}</span><span class="mono">${esc(c.key)}</span></div>
+      <div class="t">${esc(c.summary)}</div>
+      ${c.proximo ? `<div class="small"><b>Próximo:</b> ${esc(c.proximo)}</div>` : ""}
+      ${c.atencao || c.prioridade || c.assignee ? `<div class="small" style="display:flex;gap:6px;flex-wrap:wrap">${c.prioridade ? '<span class="pill ip">Prioridade da Diretoria</span>' : ""}${c.atencao ? '<span class="pill soon">Atenção</span>' : ""}${c.assignee ? `<span class="pill ghost">${esc(c.assignee)}</span>` : ""}</div>` : ""}</a>`;
+  }
+  function renderFunil() {
+    const base = funil.filter((c) => !fOrigem || c.origens.includes(fOrigem));
+    const ativos = base.filter((c) => ETAPAS.some(([k]) => k === c.etapa));
+    const kp = [["Demandas ativas", ativos.length], ["Pedem atenção", ativos.filter((c) => c.atencao).length], ["Em formalização", base.filter((c) => c.etapa === "formalizacao").length], ["Aprovadas a executar", base.filter((c) => c.etapa === "aprovado").length]];
+    $("#funilKpis").innerHTML = kp.map(([n, v]) => `<div class="kpi"><div class="v num">${v}</div><div class="l">${n}</div></div>`).join("");
+    const col = ([k, nome]) => { const l = base.filter((c) => c.etapa === k);
+      return `<div><div class="stage-head" style="border-bottom-color:${k === "aprovado" ? "var(--ok)" : k === "formalizacao" ? "var(--accent)" : "var(--line)"}"><h3>${nome}</h3><span class="n">${l.length}</span></div>
+      <div style="display:flex;flex-direction:column;gap:10px">${l.map(cardFunil).join("") || '<div class="empty small">Nada nesta etapa.</div>'}</div></div>`; };
+    $("#funilOut").innerHTML = ETAPAS.map(col).join("");
+    $("#funilExtra").innerHTML = EXTRAS.map(col).join("");
+    $("#funilExtraSum").textContent = `Radar de editais (${base.filter((c) => c.etapa === "radar").length}) e encerrados (${base.filter((c) => c.etapa === "encerrado").length})`;
+    $("#funilFonte").textContent = funil.length ? `Atualizado em ${String(FUNIL.geradoEm).slice(8, 10)}/${String(FUNIL.geradoEm).slice(5, 7)}.` : "Sem dados do funil.";
+  }
+
   /* ---------------- pipeline ---------------- */
   const tiposPipe = Array.from(new Set(parceiros.map((p) => p.tipo)));
   $("#pTipo").innerHTML = '<option value="">Todos os tipos</option>' + tiposPipe.map((t) => `<option value="${t}">${esc(V.tipos[t])}</option>`).join("");
@@ -633,5 +665,5 @@
   }
   window.addEventListener("hashchange", rotear);
 
-  renderVisao(); renderAtividades(); renderPipeline(); renderIndicadores(); renderEquipe(); rotear();
+  renderVisao(); renderAtividades(); renderFunil(); renderPipeline(); renderIndicadores(); renderEquipe(); rotear();
 })();
